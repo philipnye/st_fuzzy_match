@@ -26,7 +26,5 @@ st.set_page_config(
 
 # %%
 # SET UP PAGE NAVIGATION
-st.write(st.__version__)
-
 if st.button("Next", type="primary"):
     st.switch_page("pages/st_fuzzy_match_operate.py")
