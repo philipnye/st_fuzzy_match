@@ -35,13 +35,17 @@ st.session_state.update(st.session_state)
 
 # LOAD DATASETS
 # TODO
-df_left = pd.DataFrame(
+if 'df_left' and 'df_right' not in st.session_state:
+    st.session_state['df_left'] = pd.DataFrame()
+    st.session_state['df_right'] = pd.DataFrame()
+
+st.session_state['df_left'] = df_left = pd.DataFrame(
     {
         "A": ["foo", "bar", "baz", "qux"],
         "B": [1, 2, 3, 4],
     }
 )
-df_right = pd.DataFrame(
+st.session_state['df_right'] = df_right = pd.DataFrame(
     {
         "C": ["foo", "bar", "baz", "qux"],
         "D": [1, 2, 3, 4],
