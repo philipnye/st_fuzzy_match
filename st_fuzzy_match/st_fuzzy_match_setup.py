@@ -68,15 +68,26 @@ for i in range(st.session_state['match_column_count']):
         key="selectbox_match_type_" + str(i),
     )
 
-    # New match button
+    # Add match button
     st.button(
-        key="button_add_new_match_columns_" + str(i),
+        key="button_add_match_columns_" + str(i),
         label="Add further match columns",
         type="primary",
         on_click=lambda i=i: st.session_state.update(
             match_column_count=st.session_state['match_column_count'] + 1
         ),
     )
+
+    # Remove match button
+    if i > 0:
+        st.button(
+            key="button_remove_match_columns_" + str(i),
+            label="Remove match columns",
+            type="secondary",
+            on_click=lambda i=i: st.session_state.update(
+                match_column_count=st.session_state['match_column_count'] - 1
+            ),
+        )
 
 # Collate match columns
 match_columns_df_left = [
