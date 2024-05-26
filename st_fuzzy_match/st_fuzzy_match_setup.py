@@ -18,10 +18,14 @@ import pandas as pd
 import streamlit as st
 
 # SET PAGE CONFIG
+page_title = "1. Setup"
+
 st.set_page_config(
-    page_title="Streamlit fuzzy match",
+    page_title=page_title,
     layout="wide",
 )
+
+st.title(page_title)
 
 # LOAD DATASETS
 # TODO
