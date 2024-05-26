@@ -90,14 +90,7 @@ match_limit = st.number_input(
     help="""The maximum number of matches to find for each record""",
 )
 
-# Advanced menu toggle
-display_advanced_menu = st.toggle(
-    "Show advanced options",
-    False,
-    key="toggle_display_advanced_menu",
-)
-
-with st.expander("Advanced options", expanded=display_advanced_menu):
+with st.expander("Advanced options"):
 
     # Require unique matches
     require_unique_matches = st.checkbox(
