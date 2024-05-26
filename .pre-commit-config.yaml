@@ -23,7 +23,7 @@ repos:
         types: [python]
     -   id: check-xxx
         name: check-xxx
-        entry: (?i)XXX
+        entry: \b(?i)XXX\b
         language: pygrep
         types: [text]
         exclude: .pre-commit-config.yaml
