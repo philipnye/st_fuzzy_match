@@ -27,6 +27,12 @@ st.set_page_config(
 
 st.title(page_title)
 
+# SAVE WIDGET STATE TO SESSION STATE
+# This enables widget state to be used in other app pages
+# NB: Best solution as of May 2024
+# Ref: https://discuss.streamlit.io/t/multi-page-apps-with-widget-state-preservation-the-simple-way/22303/2?       # noqa: E501
+st.session_state.update(st.session_state)
+
 # LOAD DATASETS
 # TODO
 df_left = pd.DataFrame(
@@ -74,7 +80,6 @@ for i in range(st.session_state['match_column_count']):
 
     # Add match button
     st.button(
-        key="button_add_match_columns_" + str(i),
         label="Add further match columns",
         type="primary",
         on_click=lambda i=i: st.session_state.update(
@@ -85,7 +90,6 @@ for i in range(st.session_state['match_column_count']):
     # Remove match button
     if i > 0:
         st.button(
-            key="button_remove_match_columns_" + str(i),
             label="Remove match columns",
             type="secondary",
             on_click=lambda i=i: st.session_state.update(

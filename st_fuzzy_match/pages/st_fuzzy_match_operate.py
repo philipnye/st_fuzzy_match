@@ -22,6 +22,13 @@ st.set_page_config(
     layout="wide",
 )
 
+
+# SAVE WIDGET STATE TO SESSION STATE
+# This enables widget state to be used in other app pages
+# NB: Best solution as of May 2024
+# Ref: https://discuss.streamlit.io/t/multi-page-apps-with-widget-state-preservation-the-simple-way/22303/2?       # noqa: E501
+st.session_state.update(st.session_state)
+
 # SET UP PAGE NAVIGATION
 if st.button("Back", type="secondary"):
     st.switch_page("st_fuzzy_match_setup.py")
