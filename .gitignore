@@ -1,6 +1,7 @@
 .vscode/
 __pycache__/
-/temp
+node_modules/
+temp/
 
 temp*.py
 todo.txt
