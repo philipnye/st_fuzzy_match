@@ -41,33 +41,80 @@ df_right = pd.DataFrame(
 # DISPLAY MATCH OPTIONS
 st.write("Match options")
 
-# Match columns
-match_column_df_left = st.selectbox(
-    "Match column in left dataset",
-    df_left.columns,
-    key="selectbox_match_column_df_left",
-)
-match_column_df_right = st.selectbox(
-    "Match column in right dataset",
-    df_right.columns,
-    key="selectbox_match_column_df_right",
-)
+# Matches
+if 'match_column_count' not in st.session_state:
+    st.session_state['match_column_count'] = 1
+
+match_type_options = ["Exact", "Date", "Fuzzy"]
+
+for i in range(st.session_state['match_column_count']):
+
+    # Columns
+    st.selectbox(
+        "Match column in left dataset",
+        df_left.columns,
+        key="selectbox_match_column_df_left_" + str(i),
+    )
+    st.selectbox(
+        "Match column in right dataset",
+        df_right.columns,
+        key="selectbox_match_column_df_right_" + str(i),
+    )
+
+    # Match type
+    st.selectbox(
+        "Match type",
+        options=match_type_options,
+        key="selectbox_match_type_" + str(i),
+    )
+
+    # New match button
+    st.button(
+        key="button_add_new_match_columns_" + str(i),
+        label="Add further match columns",
+        type="primary",
+        on_click=lambda i=i: st.session_state.update(
+            match_column_count=st.session_state['match_column_count'] + 1
+        ),
+    )
+
+# Collate match columns
+match_columns_df_left = [
+    st.session_state["selectbox_match_column_df_left_" + str(i)]
+    for i in range(st.session_state['match_column_count'])
+]
+match_columns_df_right = [
+    st.session_state["selectbox_match_column_df_right_" + str(i)]
+    for i in range(st.session_state['match_column_count'])
+]
 
 # Display columns
-display_columns_df_left_options = [c for c in df_left.columns if c != match_column_df_left]
-display_columns_df_right_options = [c for c in df_right.columns if c != match_column_df_right]
+display_columns_df_left_options = [c for c in df_left.columns if c not in match_columns_df_left]
+display_columns_df_right_options = [c for c in df_right.columns if c not in match_columns_df_right]
+
 display_columns_df_left = st.multiselect(
     "Display columns in left dataset",
     display_columns_df_left_options,
     key="multiselect_display_columns_df_left",
     help="Other columns to display during matching",
 )
+if len(display_columns_df_left_options) == 0:
+    st.caption("""
+        All columns in left dataset are being used in matching and will be displayed
+        during matching
+    """)
+
 display_columns_df_right = st.multiselect(
     "Display columns in right dataset",
     display_columns_df_right_options,
     key="multiselect_display_columns_df_right",
     help="Other columns to display during matching",
 )
+if len(display_columns_df_right_options) == 0:
+    st.caption("""
+        All columns in right dataset are being used in matching and will be displayed
+        during matching
+    """)
 
 # Score cutoff
 score_cutoff = st.slider(
